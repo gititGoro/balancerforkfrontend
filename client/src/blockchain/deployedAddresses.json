@@ -1,0 +1,8 @@
+{
+    "kovan": {
+        "BFactory": "0x30a0dbE678a34f83a8295ABb60f4b40B43f35eA4",
+        "BPools":[
+            "0x0fab890488d6ad1832746119f6caae2a603eea1c"
+        ]
+    }
+}
