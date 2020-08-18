@@ -50,7 +50,7 @@ export default function Dashboard() {
 
 const pinStyles = makeStyles(theme => createStyles({
     root: {
-        background: theme.componentBackground[theme.palette.type],
+        background: theme.paper[theme.palette.type],
         padding: '10px',
         color: theme.foregroundColor[theme.palette.type],
         margin: 10
