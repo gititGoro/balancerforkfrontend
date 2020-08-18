@@ -1,0 +1,4 @@
+1. Pin Pools
+2. Remove pinned Pools
+3. Actually set up pools (bind)
+4. Join and exit
