@@ -8,6 +8,7 @@ import ContractInstances from '../../../../../blockchain/ContractInstances'
 import { Contract } from 'ethers'
 interface props {
     contractName: string
+    tokenIndex: number,
 }
 
 const useStyles = makeStyles({
@@ -33,8 +34,7 @@ export default function ControlsForContracts(props: props) {
 
     const permittedPredicate = permittedPredicateFactory(props.contractName)
 
-    const contract = getContract(props.contractName, ethereumContextProps.blockchain.contracts)
-
+    const contract = getContract(props.contractName, ethereumContextProps.blockchain.contracts, props.tokenIndex)
     const functions = getContractFunctions(contract)
         .filter(permittedPredicate)
         .filter(f => f.indexOf('(') !== -1)
@@ -81,10 +81,16 @@ const getContractFunctions = (contract: Contract) => {
 const getContractAddress = (contract: Contract): string => {
     return contract.address
 }
-const getContract = (contractName: string, contracts: ContractInstances): Contract => {
+const getContract = (contractName: string, contracts: ContractInstances, tokenIndex: number): Contract => {
     if (contractName.startsWith('BPool')) {
         const index = parseInt(contractName.substring(contractName.indexOf('l') + 1))
         return contracts.BPools[index]
     }
-    return contracts.BFactory
+    else if (contractName === 'BFactory') {
+        return contracts.BFactory
+    }
+    else {
+        return contracts.Tokens[tokenIndex]
+    }
+
 }

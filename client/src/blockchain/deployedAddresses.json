@@ -1,8 +1,24 @@
 {
     "kovan": {
         "BFactory": "0x30a0dbE678a34f83a8295ABb60f4b40B43f35eA4",
-        "BPools":[
+        "BPools": [
             "0x0fab890488d6ad1832746119f6caae2a603eea1c"
+        ],
+        "Tokens": [
+            "0x719d113f2c0D11f9797c3BC8D261323820c2132e",
+            "0x6DCBFbcd99D7b989De348aC06c8944Aa4738192a",
+            "0x1E8e017fe09d8D0c652458822Bc87e46Ca3e42Ea",
+            "0xb6b225BD0F0506CF431EA492e90fBfD58589d6D5",
+            "0x5318CDd1D39005fCFDbc8Ca6662C1074A83119dD",
+            "0x5429A60B8fC7E2002840eA789ebD94FC253e102A",
+            "0xEc218Ca1D57c7aB9ae2a238D9BE7B97e807DAd6B",
+            "0x17250e05D879670c1d7aF055A287Dd46b1cc6c88",
+            "0xfC387B2522D80CF163b84B36E14AfCa80409b5a4",
+            "0x1784e824fE8CFCA87719fB183273948BdD99CA0B",
+            "0x450b5e24067d717e52Ab40990Fb9Ff7c48c4Ea98",
+            "0x29FA0d0d781Ecc5A40294Aac5B7aC28011f285c7",
+            "0x71F90B8a9540e73B8Ca1E4eEd143de694A78ABE1",
+            "0x42Df5A2E1b0Be4CA0936dDD5d73A8c29D7b90335"
         ]
     }
 }

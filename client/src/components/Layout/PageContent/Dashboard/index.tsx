@@ -35,7 +35,7 @@ export default function Dashboard() {
                 spacing={10}
             >
                 <Grid item>
-                    <ContractSelector />
+                    <ContractSelector  />
                 </Grid>
             </Grid>
 

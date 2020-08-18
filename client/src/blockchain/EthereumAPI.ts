@@ -140,10 +140,11 @@ export async function GetContracts(signer: ethers.Signer, network: string): Prom
 
     const BFactory = new contracts.BFactoryFactory(signer).attach(addresses[network]["BFactory"])
     const BPools = addresses[network]['BPools'].map(poolAddress => new contracts.BPoolFactory(signer).attach(poolAddress))
-
+    const Tokens = addresses[network]['Tokens'].map(address=> new contracts.MockDaiFactory(signer).attach(address))
     return {
         BFactory,
-        BPools
+        BPools,
+        Tokens
     }
 }
 

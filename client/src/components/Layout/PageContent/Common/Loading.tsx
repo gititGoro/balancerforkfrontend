@@ -42,7 +42,7 @@ export default function Loading(props: { invisible?: boolean }) {
     >
         <Grid item></Grid>
         <Grid item>
-            <img src={doge} width={200} />
+            <img src={doge} width={400} />
         </Grid>
         <Grid item>
             <Typography variant="h3" className={classes.dogeText}>

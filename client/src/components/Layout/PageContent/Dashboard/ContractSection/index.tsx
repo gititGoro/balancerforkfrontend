@@ -18,6 +18,7 @@ const useStyles = makeStyles({
 })
 interface props {
     selectedContract: string
+    index:number
 }
 
 export default function ContractSection(props: props) {
@@ -36,7 +37,7 @@ export default function ContractSection(props: props) {
             className={classes.grid}
         >
             <Grid item>
-                <ControlsForContract contractName={props.selectedContract} />
+                <ControlsForContract contractName={props.selectedContract} tokenIndex={props.index} />
             </Grid>
         </Grid>
     </div >

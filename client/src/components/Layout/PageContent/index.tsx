@@ -37,7 +37,6 @@ export default function PageContent(props: props) {
     const ethereumContext = useContext(EthereumContext)
     const classes = useStyles()
     const [redirection, setRedirection] = useState<string>("")
-
     const renderRedirect = redirection !== '' ? <Redirect to={redirection} /> : ''
 
     React.useEffect(() => {
@@ -60,7 +59,7 @@ export default function PageContent(props: props) {
                     <LandingPage setRedirect={setRedirection} />
                 </Route>
                 <Route path='/admin' exact>
-                   <Dashboard />
+                   <Dashboard  />
                 </Route>
             </Switch>
         </div>

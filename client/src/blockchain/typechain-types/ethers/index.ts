@@ -9,6 +9,7 @@ export * from "./BPoolFactory";
 export * from "./BTokenFactory";
 export * from "./BTokenBaseFactory";
 export * from "./MigrationsFactory";
+export * from "./MockDaiFactory";
 export * from "./TbPoolJoinExitFactory";
 export * from "./TbPoolJoinExitNoFeeFactory";
 export * from "./TbPoolJoinPoolFactory";
