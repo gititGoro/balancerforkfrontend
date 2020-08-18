@@ -231,6 +231,12 @@ function AppropriateAction(props: appropriateActionProps) {
                 setViewPromise(Reflect.apply(props.action, undefined, props.inputs || []))
             } else {
                 let args = props.inputs as any[]
+                for (let i = 0; i < args.length; i++) {
+                    let possibleArray = JSON.parse(args[i])
+                    if (Array.isArray(possibleArray)) {
+                        args[i] = possibleArray
+                    }
+                }
                 args = args || []
                 if (props.mutability === 'payable')
                     args.push({ value: weiToEthString(props.payableEth) })
