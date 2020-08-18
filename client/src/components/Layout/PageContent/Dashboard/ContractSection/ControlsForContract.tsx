@@ -6,6 +6,7 @@ import ControlsForFunction from "./ControlsForFunction"
 import { Grid, Typography, Paper, makeStyles } from '@material-ui/core'
 import ContractInstances from '../../../../../blockchain/ContractInstances'
 import { Contract } from 'ethers'
+import { loadPools } from 'src/blockchain/EthereumAPI'
 interface props {
     contractName: string
     tokenIndex: number,
@@ -34,7 +35,7 @@ export default function ControlsForContracts(props: props) {
 
     const permittedPredicate = permittedPredicateFactory(props.contractName)
 
-    const contract = getContract(props.contractName, ethereumContextProps.blockchain.contracts, props.tokenIndex)
+    const contract = getContract(props.contractName, ethereumContextProps.blockchain.contracts, props.tokenIndex,ethereumContextProps.network)
     const functions = getContractFunctions(contract)
         .filter(permittedPredicate)
         .filter(f => f.indexOf('(') !== -1)
@@ -81,10 +82,12 @@ const getContractFunctions = (contract: Contract) => {
 const getContractAddress = (contract: Contract): string => {
     return contract.address
 }
-const getContract = (contractName: string, contracts: ContractInstances, tokenIndex: number): Contract => {
-    if (contractName.startsWith('BPool')) {
-        const index = parseInt(contractName.substring(contractName.indexOf('l') + 1))
-        return contracts.BPools[index]
+const getContract = (contractName: string, contracts: ContractInstances, tokenIndex: number,network:string): Contract => {
+    const pools = loadPools(network)
+    const poolIndex = pools.findIndex(p=>p.friendly===contractName)
+    if (poolIndex>=0) {
+        const contractIndex = contracts.BPools.findIndex(c=>c.address == pools[poolIndex].address)
+        return contracts.BPools[contractIndex]
     }
     else if (contractName === 'BFactory') {
         return contracts.BFactory

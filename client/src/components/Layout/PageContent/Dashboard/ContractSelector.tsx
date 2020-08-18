@@ -4,6 +4,7 @@ import { EthereumContext } from '../../../contexts/EthereumContext'
 import ContractSection from './ContractSection/index'
 import { Grid, Select, FormControl, InputLabel, MenuItem, makeStyles, createStyles } from '@material-ui/core';
 import { Loading } from '../Common';
+import {loadPools} from '../../../../blockchain/EthereumAPI'
 
 const useStyles = makeStyles(theme => createStyles({
     select: {
@@ -43,10 +44,10 @@ export default function ContractSelector() {
 
     if (!ethereumContextProps.blockchain)
         return <div></div>
-    const bPoolList = ethereumContextProps.blockchain.contracts.BPools.map((b, i) => 'BPool' + i)
+    const pools = loadPools(ethereumContextProps.network) 
+    const bPoolList = pools.map(p=>p.friendly)
 
     const contractList = ['BFactory', ...bPoolList, ...tokenList]
-
 
     return <Grid
         container

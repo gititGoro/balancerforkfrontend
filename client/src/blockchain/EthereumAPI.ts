@@ -134,13 +134,86 @@ export function GetEthersFromWeb3Modal(modalProvider: any): ethersMetamask {
     }
 }
 
+interface BPoolStorage {
+    address: string
+    friendly: string
+}
+
+interface BPoolNetworkItem {
+    network: string
+    pools: BPoolStorage[]
+}
+
+export interface localBPoolstorage {
+    networks: BPoolNetworkItem[]
+}
+
+export const loadPools = (network: string): BPoolStorage[] => {
+    const storedString = localStorage.getItem('BPoolStorage')
+    if (storedString) {
+        const storage: localBPoolstorage = JSON.parse(storedString)
+        const currentNetwork = storage.networks.filter(n => n.network === network)
+        if (currentNetwork.length > 0) {
+            return currentNetwork[0].pools
+        }
+    }
+    return []
+}
+
+export const addPool = (network: string, pool: BPoolStorage) => {
+    const existing = loadPools(network)
+    if (existing.findIndex(p => p.address === pool.address) === -1) {
+        existing.push(pool)
+        const storedString = localStorage.getItem('BPoolStorage')
+        let storage: localBPoolstorage
+        if (storedString) {
+            storage = JSON.parse(storedString)
+            let found = false
+            for (let i = 0; i < storage.networks.length; i++) {
+                if (storage.networks[i].network === network) {
+                    found = true
+                    storage.networks[i].pools = existing
+                }
+            }
+            if (!found)
+                storage.networks.push({ network, pools: existing })
+        }
+        else {
+            storage = {
+                networks: [
+                    {
+                        network,
+                        pools: existing
+                    }
+                ]
+            }
+        }
+        localStorage.setItem('BPoolStorage', JSON.stringify(storage))
+    }
+}
+
+export const removePool = (network: string, address: string) => {
+    const storedString = localStorage.getItem('BPoolStorage')
+    if (storedString) {
+        let storage: localBPoolstorage = JSON.parse(storedString)
+        let networkIndex = storage.networks.findIndex(n => n.network === network)
+        if (networkIndex !== -1) {
+            let pools = storage.networks[networkIndex].pools
+            storage.networks[networkIndex].pools = pools.filter(p => p.address !== address)
+            localStorage.setItem('BPoolStorage', JSON.stringify(storage))
+        }
+    }
+}
+
+
 export async function GetContracts(signer: ethers.Signer, network: string): Promise<ContractInstances | undefined> {
     if (Object.keys(addresses).filter(key => key === network).length === 0)
         return
 
     const BFactory = new contracts.BFactoryFactory(signer).attach(addresses[network]["BFactory"])
-    const BPools = addresses[network]['BPools'].map(poolAddress => new contracts.BPoolFactory(signer).attach(poolAddress))
-    const Tokens = addresses[network]['Tokens'].map(address=> new contracts.MockDaiFactory(signer).attach(address))
+    const bpoolArray = loadPools(network)
+    const BPools = bpoolArray.map(pool => new contracts.BPoolFactory(signer).attach(pool.address))
+    const Tokens = addresses[network]['Tokens'].map(address => new contracts.MockDaiFactory(signer).attach(address))
     return {
         BFactory,
         BPools,
